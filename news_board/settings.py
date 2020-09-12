@@ -10,13 +10,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'x!z$4g$_6sg^37ij!xv5^hdje9z!)5j&x9%&k6ofcpt8*alrlr'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -31,6 +30,7 @@ INSTALLED_APPS = [
 
     # Local
     'api.apps.ApiConfig',
+    'posts.apps.PostsConfig',
 
     # Rest_FW
 

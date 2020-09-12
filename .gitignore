@@ -114,6 +114,5 @@ costs/migrations/
 .idea/
 
 set
-.env
 .gitsecret/keys/random_seed
 !*.secret
