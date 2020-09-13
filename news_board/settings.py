@@ -1,6 +1,7 @@
 import os
-from pathlib import Path
 from datetime import timedelta
+
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,12 +11,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'sz9id2n5@hri14^1nyr4w)y1$3er&^+c-t5l_z(_6g=&knz=lh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
 
 # Application definition
 
@@ -29,7 +31,6 @@ INSTALLED_APPS = [
 
 
     # Local
-    'api.apps.ApiConfig',
     'posts.apps.PostsConfig',
 
     # Rest_FW
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'news_board.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,6 +75,7 @@ WSGI_APPLICATION = 'news_board.wsgi.application'
 
 
 # Database
+# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -85,7 +87,9 @@ DATABASES = {
     }
 }
 
+
 # Password validation
+# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -104,6 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
+# https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -115,13 +120,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Rest framework config
-
 REST_FRAMEWORK = {
 
     'DEFAULT_PERMISSION_CLASSES': (
 
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ),
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -170,3 +173,8 @@ SIMPLE_JWT = {
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = '/static/'
+
+AUTHENTICATION_BACKENDS = (
+
+    'django.contrib.auth.backends.ModelBackend',
+)

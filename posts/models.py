@@ -13,12 +13,10 @@ class Post(models.Model):
     amount_of_upvotes = models.SmallIntegerField(default=0)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    class Meta:
-        ordering = ['creation_date']
-
-    def was_published_recently(self):
-        now = timezone.now()
-        return now - datetime.timedelta(days=1) <= self.creation_date <= now
+    # class Meta:
+    #     ordering = ['creation_date']
+    def __str__(self):
+        return self.title
 
 
 class Comment(models.Model):
@@ -29,4 +27,5 @@ class Comment(models.Model):
     creation_date = models.DateField(auto_now=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
 
-
+    def __str__(self):
+        return str(self.id)
