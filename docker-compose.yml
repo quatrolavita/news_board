@@ -15,19 +15,20 @@ services:
       - "8000:8000"
       volumes:
       - .:/app
-      env_file:
-        - ./prod.env
       command: >
-        sh -c "
-            python manage.py migrate  &&
-            python manage.py runserver 0.0.0.0:8000"
+        sh -c " python manage.py wait_for_db &&
+                python manage.py migrate &&
+                python manage.py runserver 0.0.0.0:8000"
       depends_on:
         - db
+      links:
+        - db:db
+
 
    db:
       image: postgres:10-alpine
-      env_file:
-        - ./prod.env
+      environment:
+
    celery-worker:
       build: .
       command: celery -A news_board worker -loglevel=info
@@ -36,6 +37,7 @@ services:
       depends_on:
           - app
           - redis
+
 
    celery-beat:
         build: .
@@ -47,3 +49,4 @@ services:
           - celery-worker
           - app
           - redis
+

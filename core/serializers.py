@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """This class serialize User object"""
     class Meta:
         model = User
         fields = ("email", "username", "password")

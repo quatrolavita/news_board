@@ -11,8 +11,6 @@ class Post(models.Model):
     amount_of_upvotes = models.SmallIntegerField(default=0)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    # class Meta:
-    #     ordering = ['creation_date']
     def __str__(self):
         return self.title
 

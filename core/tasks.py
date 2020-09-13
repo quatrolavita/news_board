@@ -4,6 +4,7 @@ from posts.models import Vote, Post
 
 @app.task()
 def reset_upvotes():
+    """ Task that wake up every 24h"""
 
     Vote.objects.all().delete()
 

@@ -17,3 +17,5 @@ COPY . /app
 
 RUN adduser -D user
 USER user
+
+CMD gunicorn news_board.wsgi:application --bind 0.0.0.0:$PORT
