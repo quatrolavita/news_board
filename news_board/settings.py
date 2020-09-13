@@ -16,7 +16,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get("DEBUG", default=1)))
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOST').split(" ")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOST").split(" ")
 
 
 # Application definition
@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     # Celery
-    'celery',
+    "celery",
 ]
 
 MIDDLEWARE = [
@@ -80,7 +80,7 @@ DATABASES = {
         "USER": os.getenv("DB_USER") or "postgres",
         "PASSWORD": os.getenv("DB_PASS"),
         "HOST": os.getenv("DB_HOST") or "localhost",
-        'CONN_MAX_AGE': 500
+        "CONN_MAX_AGE": 500,
     }
 }
 
@@ -155,8 +155,8 @@ SIMPLE_JWT = {
 
 # Redis/Celery related settings
 
-REDIS_HOST = os.environ.get('REDIS_HOST') or '0.0.0.0'
-REDIS_PORT = os.environ.get('REDIS_PORT') or '6379'
+REDIS_HOST = os.environ.get("REDIS_HOST") or "0.0.0.0"
+REDIS_PORT = os.environ.get("REDIS_PORT") or "6379"
 CELERY_BROKER_URL = "redis://" + REDIS_HOST + ":" + REDIS_PORT + "/0"
 CELERY_BROKER_TRANSPORT_OPTION = {"visibility_timeout": 3600}
 CELERY_RESULT_BACKEND = "redis://" + REDIS_HOST + ":" + REDIS_PORT + "/0"

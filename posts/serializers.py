@@ -63,6 +63,7 @@ class CommentCreateSerializer(serializers.ModelSerializer):
 
 class VoteCreateSerializer(serializers.ModelSerializer):
     """This class serialize Vote object"""
+
     class Meta:
         model = Vote
         fields = ("post",)
