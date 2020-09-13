@@ -2,13 +2,6 @@ from rest_framework import serializers
 from .models import Post, Comment
 from django.contrib.auth.models import User
 
-class UserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        fields = 'username'
-
-
 
 class CommentSerializer(serializers.ModelSerializer):
     """This class serialize Comment objects"""
@@ -17,8 +10,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'author', 'content', 'creation_date')
-        depth = 1
+        fields = ('id', 'author', 'content', 'creation_date', 'post')
+
+
 
 class PostListSerializer(serializers.ModelSerializer):
     """This class serialize Post objects"""
@@ -27,8 +21,7 @@ class PostListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ("title", "link", "amount_of_upvotes", "author")
-        depth = 1
+        fields = ("id", "title", "link", "amount_of_upvotes", "author")
 
 
 class PostDetailSerializer(serializers.ModelSerializer):
@@ -43,7 +36,6 @@ class PostDetailSerializer(serializers.ModelSerializer):
 
 class PostCreateSerializer(serializers.ModelSerializer):
     """Detail info abut Post"""
-    author = UserSerializer
 
     class Meta:
         model = Post
@@ -54,8 +46,7 @@ class PostCreateSerializer(serializers.ModelSerializer):
 class CommentCreateSerializer(serializers.ModelSerializer):
     """This class serialize Comment objects"""
 
-    author = serializers.SlugRelatedField(slug_field='username', read_only=True)
-
     class Meta:
         model = Comment
-        fields = 'content'
+        fields = ('content',)
+

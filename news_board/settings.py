@@ -3,7 +3,7 @@ from datetime import timedelta
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'sz9id2n5@hri14^1nyr4w)y1$3er&^+c-t5l_z(_6g=&knz=lh'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -32,14 +32,12 @@ INSTALLED_APPS = [
 
     # Local
     'posts.apps.PostsConfig',
+    'core.apps.CoreConfig',
 
     # Rest_FW
 
     'rest_framework',
-    'rest_framework.authtoken',
     'corsheaders',
-    'djoser',
-
 ]
 
 MIDDLEWARE = [
@@ -106,7 +104,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -124,28 +121,19 @@ REST_FRAMEWORK = {
 
     'DEFAULT_PERMISSION_CLASSES': (
 
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ),
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
 
-# Settings SMTP
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-
 # JWT settings
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
@@ -173,8 +161,3 @@ SIMPLE_JWT = {
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = '/static/'
-
-AUTHENTICATION_BACKENDS = (
-
-    'django.contrib.auth.backends.ModelBackend',
-)
