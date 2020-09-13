@@ -31,7 +31,7 @@ services:
 
    celery-worker:
       build: .
-      command: celery -A news_board worker -loglevel=info
+      command: celery -A news_board worker -l info
       links:
           - redis
       depends_on:
@@ -41,7 +41,7 @@ services:
 
    celery-beat:
         build: .
-        command: celery -A news_board beat -loglevel=info
+        command: celery -A news_board beat -l info
         links:
           - celery-worker
           - redis
