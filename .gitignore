@@ -118,3 +118,4 @@ set
 !*.secret
 celerybeat.pid
 celerybeat-schedule
+prod.env

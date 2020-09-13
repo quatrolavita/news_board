@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('posts', '0002_vote'),
+        ("posts", "0002_vote"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='vote',
-            name='ip',
+            model_name="vote",
+            name="ip",
             field=models.GenericIPAddressField(),
         ),
     ]

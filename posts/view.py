@@ -1,17 +1,20 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, renderers, generics, permissions
+from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
 from core.permissions import IsAuthorOrAdmin
 from .models import Post, Comment, Vote
-from .serializers import (PostDetailSerializer, PostListSerializer,
-                          PostCreateSerializer, CommentSerializer,
-                          CommentCreateSerializer)
+from .serializers import (
+    PostDetailSerializer,
+    PostListSerializer,
+    PostCreateSerializer,
+    CommentSerializer,
+    CommentCreateSerializer,
+)
 
 
 class PostViewSet(viewsets.ViewSet):
-
     def list(self, request):
         queryset = Post.objects.all()
         serializer = PostListSerializer(queryset, many=True)
@@ -49,7 +52,6 @@ class PostViewSet(viewsets.ViewSet):
 
 
 class CommentViewSet(viewsets.ViewSet):
-
     def list(self, request, post_pk):
         queryset = Comment.objects.filter(post=post_pk)
         serializer = CommentSerializer(queryset, many=True)
@@ -89,7 +91,6 @@ class CommentViewSet(viewsets.ViewSet):
 
 
 class VoteViewSet(viewsets.ViewSet):
-
     @action(detail=False, permission_classes=[permissions.IsAuthenticated])
     def create(self, request, pk=None):
         ip = Vote.get_user_ip(request)
@@ -97,7 +98,7 @@ class VoteViewSet(viewsets.ViewSet):
         post = get_object_or_404(queryset, pk=pk)
         vote = Vote(ip=ip, post=post)
         vote.save()
-        amount_upvotes = Vote.objects.filter(post=pk).distinct('ip').count()
+        amount_upvotes = Vote.objects.filter(post=pk).distinct("ip").count()
         post.amount_of_upvotes = amount_upvotes
         post.save()
 
