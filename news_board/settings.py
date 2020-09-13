@@ -130,6 +130,14 @@ REST_FRAMEWORK = {
     ),
 }
 
+# Cors headers white list
+
+CORS_ORIGIN_WHITELIST = (
+
+    'http://localhost:3000',
+    'http://localhost:8000',
+)
+
 # JWT settings
 
 SIMPLE_JWT = {
@@ -157,6 +165,19 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+# Redis/Celery related settings
+
+REDIS_HOST = '0.0.0.0'
+REDIS_PORT = '6379'
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_BROKER_TRANSPORT_OPTION = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+
 
 # Static files (CSS, JavaScript, Images)
 

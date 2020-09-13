@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
 from core.permissions import IsAuthorOrAdmin
-from .models import Post, Comment
+from .models import Post, Comment, Vote
 from .serializers import (PostDetailSerializer, PostListSerializer,
                           PostCreateSerializer, CommentSerializer,
                           CommentCreateSerializer)
@@ -86,3 +86,19 @@ class CommentViewSet(viewsets.ViewSet):
         post = get_object_or_404(queryset, pk=pk)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class VoteViewSet(viewsets.ViewSet):
+
+    @action(detail=False, permission_classes=[permissions.IsAuthenticated])
+    def create(self, request, pk=None):
+        ip = Vote.get_user_ip(request)
+        queryset = Post.objects.all()
+        post = get_object_or_404(queryset, pk=pk)
+        vote = Vote(ip=ip, post=post)
+        vote.save()
+        amount_upvotes = Vote.objects.filter(post=pk).distinct('ip').count()
+        post.amount_of_upvotes = amount_upvotes
+        post.save()
+
+        return Response(status=status.HTTP_201_CREATED)

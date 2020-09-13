@@ -1,5 +1,5 @@
 from django.urls import path
-from .view import PostViewSet, CommentViewSet
+from .view import PostViewSet, CommentViewSet, VoteViewSet
 from rest_framework.urlpatterns import format_suffix_patterns
 
 post_detail = PostViewSet.as_view({
@@ -34,4 +34,5 @@ urlpatterns = format_suffix_patterns([
     path('post/<int:pk>', post_detail),
     path('post/<int:post_pk>/comment/', comment_create_list),
     path('post/<int:post_pk>/comment/<int:pk>', comments_detail),
+    path('post/<int:pk>/vote', VoteViewSet.as_view({'post': 'create'})),
 ])

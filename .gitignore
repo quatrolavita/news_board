@@ -116,3 +116,5 @@ costs/migrations/
 set
 .gitsecret/keys/random_seed
 !*.secret
+celerybeat.pid
+celerybeat-schedule

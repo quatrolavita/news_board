@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post, Comment
+from .models import Post, Comment, Vote
 from django.contrib.auth.models import User
 
 
@@ -44,9 +44,16 @@ class PostCreateSerializer(serializers.ModelSerializer):
 
 
 class CommentCreateSerializer(serializers.ModelSerializer):
-    """This class serialize Comment objects"""
+    """This class serialize Comment object"""
 
     class Meta:
         model = Comment
         fields = ('content',)
+
+
+class VoteCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Vote
+        fields = ('post',)
 
